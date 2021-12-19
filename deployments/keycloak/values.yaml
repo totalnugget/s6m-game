@@ -1,0 +1,51 @@
+keycloak:
+  replicas: 1
+  postgresql:
+    enabled: false
+
+  extraEnv: |
+    - name: PROXY_ADDRESS_FORWARDING
+      value: "true"
+    - name: DB_VENDOR
+      value: postgres
+    - name: DB_ADDR
+      value: {{ .Release.Name }}-db
+    - name: DB_PORT
+      value: "5432"
+    - name: DB_DATABASE
+      value: keycloak
+    - name: DB_USER_FILE
+      value: /secrets/db-secret/POSTGRES_USER
+    - name: DB_PASSWORD_FILE
+      value: /secrets/db-secret/POSTGRES_PASSWORD
+    - name: KEYCLOAK_USER_FILE
+      value: /secrets/keycloak-secret/username
+    - name: KEYCLOAK_PASSWORD_FILE
+      value: /secrets/keycloak-secret/password
+    - name: KEYCLOAK_IMPORT
+      value: /realm/realm.json
+  extraEnvFrom: |
+    - secretRef:
+        name: 'keycloak-db-auth'
+  extraVolumeMounts: |
+    - name: db-secret
+      mountPath: /secrets/db-secret
+      readOnly: true
+    - name: keycloak-secret
+      mountPath: /secrets/keycloak-secret
+      readOnly: true
+    - name: realm-secret
+      mountPath: /realm/
+      readOnly: true
+  extraVolumes: |
+    - name: db-secret
+      secret:
+        secretName: keycloak-db-auth
+    - name: keycloak-secret
+      secret:
+        secretName: keycloak-auth
+    - name: realm-secret
+      secret:
+        secretName: realm-secret
+  service:
+    httpPort: 80

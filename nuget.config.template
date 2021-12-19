@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <add key="github" value="https://nuget.pkg.github.com/FHICT-S65-4/index.json" />
+  </packageSources>
+  <packageSourceCredentials>\
+    <github>
+      <add key="Username" value="GITHUB_EMAIL" />
+      <add key="ClearTextPassword" value="GITHUB_PAT" />
+      <!--https://github.com/settings/tokens and create a token with atleast the read:packages scope-->
+    </github>
+  </packageSourceCredentials>
+</configuration>

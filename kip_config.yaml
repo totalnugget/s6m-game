@@ -1,0 +1,33 @@
+buildpath: <projectDir>
+environment: dev
+scripts:
+  - name: start-minikube
+    command: bash
+    args: ['./scripts/minikube-start.sh']
+    bindings: []
+  - name: stop-minikube
+    command: bash
+    args: ['./scripts/minikube-stop.sh']
+  - name: delete-minikube
+    command: bash
+    args: ['./scripts/minikube-delete.sh']
+  - name: add-secrets
+    command: bash
+    args: ['./scripts/lib/add_secrets.sh']
+  - name: ip
+    command: bash
+    args: ['./scripts/ip.sh']
+  - name: dev-context
+    command: kubectl
+    args: ['config', 'set-context', 'minikube-discord']
+    bindings: ['pre-build', 'pre-deploy']
+    environments: ['dev']
+  - name: set-docker-env
+    command: minikube
+    args: ['docker-env', '-p', 'minikube-discord', '--shell', 'none']
+    bindings: ['pre-build', 'pre-deploy']
+    environments: ['dev']
+template: project
+version: v0.0.0+unreleased
+buildPath: '<projectDir>'
+repository: 'eu.gcr.io/s65-4-314821/'

@@ -1,0 +1,12 @@
+name: keycloak
+description: Keycloak kubernetes deployment
+version: 0.1.0
+home: https://github.com/helm/helm
+sources:
+  - https://github.com/helm/helm
+appVersion: 3.3
+
+dependencies:
+  - name: keycloak
+    version: "10.3.0"
+    repository: "@codecentric"

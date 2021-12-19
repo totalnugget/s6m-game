@@ -1,0 +1,12 @@
+[submodule "services/exergame-service"]
+	path = services/exergame-service
+	url = git@github.com:FHICT-S65-4/fitkid-exergame-service.git
+[submodule "services/organisation-service"]
+	path = services/organisation-service
+	url = git@github.com:FHICT-S65-4/fitkid-organisation-service.git
+[submodule "services/progress-service"]
+	path = services/progress-service
+	url = git@github.com:FHICT-S65-4/fitkid-progress-service.git
+[submodule "services/student-service"]
+	path = services/student-service
+	url = git@github.com:FHICT-S65-4/fitkid-student-service.git

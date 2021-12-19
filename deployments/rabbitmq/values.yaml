@@ -1,0 +1,13 @@
+rabbitmq:
+  replicas: 1
+  auth:
+    username: user
+    #existingPasswordSecret: rabbitmq-user
+    existingErlangSecret: rabbitmq-erlang
+  loadDefinition:
+    enabled: true
+    existingSecret: rabbitmq-load-definition
+  extraConfiguration: |
+    load_definitions = /app/load_definition.json
+  service:
+    httpPort: 80

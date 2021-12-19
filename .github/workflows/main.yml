@@ -1,0 +1,50 @@
+name: Build and Deploy to Google Cloud 1
+on:
+  push:
+    branches: [ deployment_gcloud ]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download kip 🐔
+        run: wget https://github.com/debugged-software/kip/releases/download/v0.0.16/kip--linux-amd64.zip -O kip.zip
+      - name: Extract kip 🐔
+        run: 7z x kip.zip
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+      - name: Configure Gcloud Docker
+        run: gcloud auth configure-docker --project ${{ secrets.GCP_PROJECT_ID }}
+      - name: Get Gcloud Credentials
+        run: gcloud container clusters get-credentials discord-app --region=${{ secrets.GCP_PROJECT_REGION }}
+      - name: Set Kubectl Context
+        run: kubectl config set-context --current --namespace core
+      - name: Add Helm repositories
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add codecentric https://codecentric.github.io/helm-charts
+          helm repo add cetic https://cetic.github.io/helm-charts
+          helm repo update
+      - name: Download Helm dependencies
+        run: |
+          helm dependency update deployments/keycloak/
+          helm dependency update deployments/rabbitmq/
+          #helm dependency update deployments/swaggerui/
+      - name: Prepare NuGet config
+        run: |
+          cp nuget.config.template nuget.config
+          sed -i 's/GITHUB_EMAIL/${{ secrets.ADMIN_USER }}/' nuget.config
+          sed -i 's/GITHUB_PAT/${{ secrets.ADMIN_PAT }}/' nuget.config
+      - name: Write RabbitMQ environment
+        run: echo -n "${{ secrets.RABBITMQ_ENV }}" > deployments/rabbitmq/.env.prod
+      - name: Kip build 🐔
+        run: linux-amd64/kip build -e prod
+      - name: Kip push 🐔
+        run: linux-amd64/kip push
+      - name: Kip deploy 🐔
+        run: linux-amd64/kip deploy -e prod
