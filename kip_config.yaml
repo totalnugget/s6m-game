@@ -19,15 +19,15 @@ scripts:
     args: ['./scripts/ip.sh']
   - name: dev-context
     command: kubectl
-    args: ['config', 'set-context', 'minikube-discord']
+    args: ['config', 'set-context', 'minikube-s6m-game']
     bindings: ['pre-build', 'pre-deploy']
     environments: ['dev']
   - name: set-docker-env
     command: minikube
-    args: ['docker-env', '-p', 'minikube-discord', '--shell', 'none']
+    args: ['docker-env', '-p', 'minikube-s6m-game', '--shell', 'none']
     bindings: ['pre-build', 'pre-deploy']
     environments: ['dev']
 template: project
 version: v0.0.0+unreleased
 buildPath: '<projectDir>'
-repository: 'eu.gcr.io/s65-4-314821/'
+repository: 's6mgame.azurecr.io/' # todo set repo here

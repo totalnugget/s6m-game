@@ -13,10 +13,10 @@ fi
 
 
 # command
-kubectl create secret generic -n core command-db-auth --from-literal=POSTGRES_USER=$COMMAND_DB_USERNAME --from-literal=POSTGRES_PASSWORD=$COMMAND_DB_PASSWORD
+kubectl create secret generic -n core command-db-auth --from-literal=username=$COMMAND_DB_USERNAME --from-literal=password=$COMMAND_DB_PASSWORD
 
 # village
-kubectl create secret generic -n core village-db-auth --from-literal=POSTGRES_USER=$VILLAGE_DB_USERNAME --from-literal=POSTGRES_PASSWORD=$VILLAGE_DB_PASSWORD
+kubectl create secret generic -n core village-db-auth --from-literal=username=$VILLAGE_DB_USERNAME --from-literal=password=$VILLAGE_DB_PASSWORD
 
 
 # Keycloak

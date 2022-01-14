@@ -16,9 +16,10 @@ global:
   commandService:
     route: /api/command
   villageService:
-    route: /api/village
+    route: village-service
   rabbitmq:
     env: .env.dev
   FAASUrl:
     BadWords: https://dappfunctions.azurewebsites.net/api/filterwords
-  RootUrl: http://localhost:8080
+  RootUrl: 
+  authkey: 3fa85f64-5717-4562-b3fc-2c963f66afa0

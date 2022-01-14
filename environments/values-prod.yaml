@@ -1,7 +1,7 @@
 global:
   environment: "production"
   dockerRegistryRepository:
-  defaultStorageClassName: standard
+  defaultStorageClassName: default
   mysqlReadyImage:
     name: mysql/mysql-server
     tag: 8.0.14
@@ -13,12 +13,13 @@ global:
     route: /api/users
   keycloak:
     route: /auth
-  guildService:
-    route: /api/guilds
-  channelService:
-    route: /api/channels
+  commandService:
+    route: /api/command
+  villageService:
+    route: /api/village
   rabbitmq:
     env: .env.prod
   FAASUrl:
     BadWords: https://dappfunctions.azurewebsites.net/api/filterwords
-  RootUrl: http://34.89.147.199
+  RootUrl: http://s6mgame-dns-4d95ae3e.hcp.westeurope.azmk8s.io
+  authkey: 3fa85f64-5717-4562-b3fc-2c963f66afa0
